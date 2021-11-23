@@ -1,0 +1,125 @@
+#include"llist.h"
+#include<stdio.h>
+#include<stdlib.h>
+
+NODE* initList(NODE* phead)
+{
+	phead=NULL;
+	return phead;
+}
+
+NODE* destroyList(NODE *phead)
+{
+	NODE *p=phead;
+	while(p!=NULL)
+	{
+		phead=p->next;
+		free(p);
+		p=phead;
+	}
+	return phead;
+}
+int countNodes(NODE *phead)
+{
+	int count=0;
+	if(phead==NULL)
+		return count;
+	NODE *p=phead;
+	while(p!=NULL)
+	{
+		count++;
+		p=p->next;
+	}
+	return count;
+}
+NODE* getNode(int ele)
+{
+	NODE *temp=malloc(sizeof(NODE));
+	if(temp==NULL)
+		return NULL;		//return temp
+	
+	temp->info=ele;
+	temp->next=NULL;
+	
+	return temp;
+}
+NODE* insertAtPos(NODE* phead,int ele,int pos,int* status)
+{
+	int n=countNodes(phead);
+	if(pos<0 || pos>n)
+	{
+		*status=0;
+		return phead;
+	}
+	NODE *temp=getNode(ele);
+	if(temp==NULL)
+	{
+		*status=0;
+		return phead;
+	}
+	//pos = 0
+	if(pos==0)
+	{
+		temp->next=phead;
+		phead=temp;
+		*status=1;
+		return phead;
+	}
+	
+	NODE *p=phead,*q=NULL;
+	
+	for(int i=0;i<pos;i++)
+	{
+		q=p;
+		p=p->next;
+	}
+	q->next=temp;
+	temp->next=p;
+	*status=1;
+	return phead;
+}
+
+void display(NODE* phead)
+{
+	if(phead==NULL)
+	{
+		printf("List is Empty\n");
+		return;
+	}
+	NODE *p=phead;
+	while(p!=NULL)
+	{
+		printf("%d ",p->info);
+		p=p->next;
+	}
+	printf("\n");
+}
+
+NODE* deleteAtPos(NODE* phead,int *pe,int pos,int* status)
+{
+	int n=countNodes(phead);
+	if(pos<0 || pos>=n)
+	{
+		*status=0;
+		return phead;
+	}
+	NODE *p=phead,*q=NULL;
+	if(pos==0)
+	{
+		phead=p->next;
+		*pe=p->info;
+		free(p);
+		*status=1;
+		return phead;
+	}
+	for(int i=0;i<pos;i++)
+	{
+		q=p;
+		p=p->next;
+	}
+	q->next=p->next;
+	*pe=p->info;
+	free(p);
+	*status=1;
+	return phead;
+}
