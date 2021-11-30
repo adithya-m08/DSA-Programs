@@ -1,30 +1,30 @@
 //Binary Tree, Linked List Implementation
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct node
 {
 	int info;
-	struct node *left,*right;
-}NODE;
+	struct node *left, *right;
+} NODE;
 
 typedef struct tree
 {
 	NODE *root;
-}TREE;
+} TREE;
 void initTree(TREE *pt);
 void createTree(TREE *pt);
 void inorder(TREE *pt);
 void preorder(TREE *pt);
 void postorder(TREE *pt);
-void postorder1(NODE*r);
+void postorder1(NODE *r);
 void destroyTree(TREE *pt);
 
 int main()
 {
 	TREE tobj;
 	initTree(&tobj);
-	
+
 	createTree(&tobj);
 	printf("Inorder BT traversal\n");
 	inorder(&tobj);
@@ -42,39 +42,39 @@ int main()
 
 void initTree(TREE *pt)
 {
-	pt->root=NULL;
+	pt->root = NULL;
 }
-NODE* create()
+NODE *create()
 {
 	int ele;
 	printf("Enter info (-1 for No node)\n");
-	scanf("%d",&ele);
-	
-	if(ele==-1)
-		return NULL;
-	
-	NODE *temp=malloc(sizeof(NODE));
-	temp->info=ele;
-	
-	printf("Enter left child of %d\n",ele);
-	temp->left=create();
+	scanf("%d", &ele);
 
-	printf("Enter right child of %d\n",ele);
-	temp->right=create();
-	
+	if (ele == -1)
+		return NULL;
+
+	NODE *temp = malloc(sizeof(NODE));
+	temp->info = ele;
+
+	printf("Enter left child of %d\n", ele);
+	temp->left = create();
+
+	printf("Enter right child of %d\n", ele);
+	temp->right = create();
+
 	return temp;
 }
 void createTree(TREE *pt)
 {
-	pt->root=create();
+	pt->root = create();
 }
 
 void in(NODE *r)
 {
-	if(r!=NULL)
+	if (r != NULL)
 	{
 		in(r->left);
-		printf("%d ",r->info);
+		printf("%d ", r->info);
 		in(r->right);
 	}
 }
@@ -85,9 +85,9 @@ void inorder(TREE *pt)
 
 void pre(NODE *r)
 {
-	if(r!=NULL)
+	if (r != NULL)
 	{
-		printf("%d ",r->info);
+		printf("%d ", r->info);
 		pre(r->left);
 		pre(r->right);
 	}
@@ -98,11 +98,11 @@ void preorder(TREE *pt)
 }
 void post(NODE *r)
 {
-	if(r!=NULL)
+	if (r != NULL)
 	{
 		post(r->left);
 		post(r->right);
-		printf("%d ",r->info);
+		printf("%d ", r->info);
 	}
 }
 void postorder(TREE *pt)
@@ -110,30 +110,30 @@ void postorder(TREE *pt)
 	post(pt->root);
 }
 
-void postorder1(NODE*r)
+void postorder1(NODE *r)
 {
-	if(r!=NULL)
+	if (r != NULL)
 	{
 		postorder1(r->left);
 		postorder1(r->right);
-		printf("%d ",r->info);
+		printf("%d ", r->info);
 	}
 }
-void destroyNode(NODE*r)
+void destroyNode(NODE *r)
 {
-	if(r!=NULL)
+	if (r != NULL)
 	{
 		destroyNode(r->left);
 		destroyNode(r->right);
-//		printf("\nFreeing %d",r->info);
+		//		printf("\nFreeing %d",r->info);
 		free(r);
 	}
 }
 void destroyTree(TREE *pt)
 {
-	if(pt->root)
+	if (pt->root)
 	{
 		destroyNode(pt->root);
-		pt->root=NULL;
+		pt->root = NULL;
 	}
 }

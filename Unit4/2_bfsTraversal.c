@@ -1,4 +1,3 @@
-/* 
 //Pgm1
 //Visits all the vertices from the source in a connected graph using BFS
 //i.e., print all vertices reachable from the given source
@@ -56,9 +55,9 @@ void bfs(int a[MAX][MAX],int n,int visited[MAX],int source)
 		}
 	}
 } 
-*/
+
  
-/*  
+
 //Pgm2: same as Pgm1, but queue is part of a structure
 //Visits all the vertices from the source in a connected graph using BFS
 //i.e., print all vertices reachable from the given source
@@ -145,10 +144,10 @@ void bfs(int a[MAX][MAX],int n,int visited[MAX],int source)
 		}
 	}
 } 
-*/
 
 
-/*  
+
+ 
 //Pgm3
 //If the graph is disconnected
 //start the bfs traversal from one of the unvisited vertices
@@ -213,10 +212,7 @@ void bfs(int a[MAX][MAX],int n,int visited[MAX],int source)
 		}
 	}
 } 
-*/
 
-
-/* 
 //Pgm4
 //Visits all the vertices from the source in a connected graph using BFS
 //i.e., print all vertices reachable from the given source
@@ -332,9 +328,9 @@ void destroyList(NODE *V[MAX],int n)
 		V[i]=NULL;
 	}
 } 
-*/
 
-/*  
+
+
 //Pgm5
 //If the graph is disconnected
 //start the bfs traversal from one of the unvisited vertices
@@ -458,9 +454,7 @@ void destroyList(NODE *V[MAX],int n)
 		V[i]=NULL;
 	}
 } 
-*/
 
-/* 
 //Pgm6: same as Pgm5, but queue is part of a structure
 //If the graph is disconnected
 //start the bfs traversal from one of the unvisited vertices
@@ -616,4 +610,3 @@ void destroyList(NODE *V[MAX],int n)
 		V[i]=NULL;
 	}
 } 
-*/

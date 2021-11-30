@@ -1,73 +1,73 @@
-#include"bst.h"
-#include<stdio.h>
-#include<stdlib.h>
+#include "bst.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 void initTree(TREE *pt)
 {
-	pt->root=NULL;
+	pt->root = NULL;
 }
 
 void createTree(TREE *pt)
 {
 	int choice;
-	NODE *temp=malloc(sizeof(NODE));
-	temp->left=temp->right=NULL;
-	
+	NODE *temp = malloc(sizeof(NODE));
+	temp->left = temp->right = NULL;
+
 	printf("Enter the info\n");
-	scanf("%d",&temp->info);
-	
-	pt->root=temp;
-	
+	scanf("%d", &temp->info);
+
+	pt->root = temp;
+
 	printf("Do you want to add one more node\n");
-	scanf("%d",&choice);
-	while(choice)
+	scanf("%d", &choice);
+	while (choice)
 	{
-		temp=malloc(sizeof(NODE));
-		temp->left=temp->right=NULL;
-	
+		temp = malloc(sizeof(NODE));
+		temp->left = temp->right = NULL;
+
 		printf("Enter the info\n");
-		scanf("%d",&temp->info);
-		
-		NODE *p=pt->root;
-		NODE *q=NULL;
-		while(p!=NULL)
+		scanf("%d", &temp->info);
+
+		NODE *p = pt->root;
+		NODE *q = NULL;
+		while (p != NULL)
 		{
-			if(temp->info <= p->info)
+			if (temp->info <= p->info)
 			{
-				q=p;
-				p=p->left;
+				q = p;
+				p = p->left;
 			}
 			else
 			{
-				q=p;
-				p=p->right;
+				q = p;
+				p = p->right;
 			}
 		}
-		if(temp->info <= q->info)
-			q->left=temp;
+		if (temp->info <= q->info)
+			q->left = temp;
 		else
-			q->right=temp;
+			q->right = temp;
 		printf("Do you want to add one more node\n");
-		scanf("%d",&choice);
+		scanf("%d", &choice);
 	}
 }
-void inord(NODE* r)
+void inord(NODE *r)
 {
-	if(r==NULL)
+	if (r == NULL)
 		return;
 	inord(r->left);
-	printf("%d ",r->info);
+	printf("%d ", r->info);
 	inord(r->right);
 }
 void inorder(TREE *pt)
 {
 	inord(pt->root);
 }
-void preord(NODE* r)
+void preord(NODE *r)
 {
-	if(r!=NULL)
+	if (r != NULL)
 	{
-		printf("%d ",r->info);
+		printf("%d ", r->info);
 		preord(r->left);
 		preord(r->right);
 	}
@@ -76,13 +76,13 @@ void preorder(TREE *pt)
 {
 	preord(pt->root);
 }
-void postord(NODE* r)
+void postord(NODE *r)
 {
-	if(r!=NULL)
+	if (r != NULL)
 	{
 		postord(r->left);
 		postord(r->right);
-		printf("%d ",r->info);
+		printf("%d ", r->info);
 	}
 }
 void postorder(TREE *pt)
@@ -91,32 +91,31 @@ void postorder(TREE *pt)
 }
 void destroyNode(NODE *r)
 {
-	if(r!=NULL)
+	if (r != NULL)
 	{
 		destroyNode(r->left);
 		destroyNode(r->right);
-		printf("\nFreeing%d",r->info);
+		printf("\nFreeing%d", r->info);
 		free(r);
 	}
 }
 void destroyTree(TREE *pt)
 {
-	if(pt->root!=NULL)
+	if (pt->root != NULL)
 	{
 		destroyNode(pt->root);
-		pt->root=NULL;
+		pt->root = NULL;
 	}
-	
 }
 int findMinimum(NODE *r)
 {
-	if(r==NULL)
+	if (r == NULL)
 		return -1;
-	
-	while(r->left!=NULL)
-		r=r->left;
-	
-	return r->info;	
+
+	while (r->left != NULL)
+		r = r->left;
+
+	return r->info;
 }
 int findMin(TREE *pt)
 {
@@ -124,50 +123,50 @@ int findMin(TREE *pt)
 }
 int findMaximum(NODE *r)
 {
-	if(r==NULL)
+	if (r == NULL)
 		return -1;
-	
-	while(r->right!=NULL)
-		r=r->right;
-	
-	return r->info;	
+
+	while (r->right != NULL)
+		r = r->right;
+
+	return r->info;
 }
 int findMax(TREE *pt)
 {
 	return findMaximum(pt->root);
 }
 
-NODE* delNode(NODE *r,int ele)
+NODE *delNode(NODE *r, int ele)
 {
-	if(r==NULL)
+	if (r == NULL)
 		return r;
-	
-	NODE *temp=NULL;
-	if(ele<r->info)
-		r->left=delNode(r->left,ele);
-	else if(ele>r->info)
-		r->right=delNode(r->right,ele);
-	else if(r->left==NULL) //single right child case and leaf node case
+
+	NODE *temp = NULL;
+	if (ele < r->info)
+		r->left = delNode(r->left, ele);
+	else if (ele > r->info)
+		r->right = delNode(r->right, ele);
+	else if (r->left == NULL) //single right child case and leaf node case
 	{
-		temp=r->right;
+		temp = r->right;
 		free(r);
 		return temp;
 	}
-	else if(r->right==NULL) //single left child case
+	else if (r->right == NULL) //single left child case
 	{
-		temp=r->left;
+		temp = r->left;
 		free(r);
 		return temp;
 	}
-	else		//replacing with inorder successor
+	else //replacing with inorder successor
 	{
-		temp=r->right;
-		while(temp->left!=NULL)
-			temp=temp->left;
-		r->info=temp->info;
-		r->right=delNode(r->right,temp->info);
+		temp = r->right;
+		while (temp->left != NULL)
+			temp = temp->left;
+		r->info = temp->info;
+		r->right = delNode(r->right, temp->info);
 	}
-/*
+	/*
 //Replacing with inorder predecessor
 	else
 	{
@@ -180,7 +179,6 @@ NODE* delNode(NODE *r,int ele)
 
 */
 	return r;
-	
 }
 
 /*
@@ -232,9 +230,9 @@ NODE* delNode(NODE *r,int ele)
 	return r;	
 } 
 */
-void deleteNode(TREE *pt,int ele)
+void deleteNode(TREE *pt, int ele)
 {
-	pt->root=delNode(pt->root,ele);
+	pt->root = delNode(pt->root, ele);
 }
 /* 
 int search(NODE *r,int ele)
@@ -251,21 +249,21 @@ int search(NODE *r,int ele)
 	return 0;
 }
  */
-int search(NODE *r,int ele)
+int search(NODE *r, int ele)
 {
-	while(r!=NULL)
+	while (r != NULL)
 	{
-		if(ele==r->info)
+		if (ele == r->info)
 			return 1;
-		else if(ele<r->info)
-			r=r->left;
+		else if (ele < r->info)
+			r = r->left;
 		else
-			r=r->right;
+			r = r->right;
 	}
 	return 0;
-} 
+}
 
-int searchEle(TREE *pt,int ele)
+int searchEle(TREE *pt, int ele)
 {
-	return search(pt->root,ele);
+	return search(pt->root, ele);
 }

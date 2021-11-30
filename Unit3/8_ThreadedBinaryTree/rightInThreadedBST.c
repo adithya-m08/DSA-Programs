@@ -1,109 +1,109 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct node
 {
 	int info;
-	struct node *left,*right;
+	struct node *left, *right;
 	int rthread;
-}NODE;
+} NODE;
 
 typedef struct tree
 {
 	NODE *root;
-}TREE;
+} TREE;
 
 void initTree(TREE *pt)
 {
-	pt->root=NULL;
+	pt->root = NULL;
 }
-void setLeft(NODE *q,NODE *temp)
+void setLeft(NODE *q, NODE *temp)
 {
-	q->left=temp;
-	temp->right=q;
-}
-
-void setRight(NODE *p,NODE *temp)
-{
-	temp->right=p->right;
-	p->right=temp;
-	p->rthread=0;
+	q->left = temp;
+	temp->right = q;
 }
 
-NODE* createNode(int ele)
+void setRight(NODE *p, NODE *temp)
 {
-	NODE *temp=malloc(sizeof(NODE));
-	temp->info=ele;
-	temp->left=temp->right=NULL;
-	temp->rthread=1;
-	
+	temp->right = p->right;
+	p->right = temp;
+	p->rthread = 0;
+}
+
+NODE *createNode(int ele)
+{
+	NODE *temp = malloc(sizeof(NODE));
+	temp->info = ele;
+	temp->left = temp->right = NULL;
+	temp->rthread = 1;
+
 	return temp;
 }
 void createTree(TREE *pt)
 {
-	int ele,choice;
+	int ele, choice;
 	printf("Enter root info\n");
-	scanf("%d",&ele);
-	pt->root=createNode(ele);
-	
+	scanf("%d", &ele);
+	pt->root = createNode(ele);
+
 	printf("Do you want to add another node\n");
-	scanf("%d",&choice);
-	
-	NODE *p,*q,*temp;
-	while(choice)
+	scanf("%d", &choice);
+
+	NODE *p, *q, *temp;
+	while (choice)
 	{
-		p=pt->root;
-		q=NULL;
+		p = pt->root;
+		q = NULL;
 		printf("Enter node info\n");
-		scanf("%d",&ele);
-		
-		temp=createNode(ele);
-		
-		while(p!=NULL)
+		scanf("%d", &ele);
+
+		temp = createNode(ele);
+
+		while (p != NULL)
 		{
-			q=p;
-			if(temp->info<p->info)
-				p=p->left;
+			q = p;
+			if (temp->info < p->info)
+				p = p->left;
 			else
 			{
-				if(p->rthread)
+				if (p->rthread)
 					break;
-				p=p->right;
+				p = p->right;
 			}
 		}
-		if(p==NULL)
-			setLeft(q,temp);
+		if (p == NULL)
+			setLeft(q, temp);
 		else
-			setRight(p,temp);
+			setRight(p, temp);
 		printf("Do you want to add one more node\n");
-		scanf("%d",&choice);
+		scanf("%d", &choice);
 	}
 }
 
 void inorder(TREE *pt)
 {
-	NODE *p=pt->root;
-	NODE *q=NULL;
+	NODE *p = pt->root;
+	NODE *q = NULL;
 	do
 	{
-		q=NULL;
-		while(p!=NULL)
+		q = NULL;
+		while (p != NULL)
 		{
-			q=p;
-			p=p->left;
+			q = p;
+			p = p->left;
 		}
-		if(q!=NULL)
+		if (q != NULL)
 		{
-			printf("%d ",q->info);
-			p=q->right;
-			while(q->rthread && p!=NULL)
+			printf("%d ", q->info);
+			p = q->right;
+			while (q->rthread && p != NULL)
 			{
-				printf("%d ",p->info);
-				q=p;
-				p=p->right;
+				printf("%d ", p->info);
+				q = p;
+				p = p->right;
 			}
 		}
-	}while(q!=NULL);
+	} while (q != NULL);
 }
 
 int main()
