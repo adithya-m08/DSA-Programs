@@ -1,125 +1,143 @@
-void bfs(int a[10][10], int n, int visited[10], int source, int dest)
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 50
+struct trienode
 {
-    int a[n];
-    int f = 0, r = -1;
-    q[++r] = source;
-    visited[source] = 1;
-    while (f <= r)
+    struct trienode *child[26];
+    int endofword;
+};
+
+typedef struct node
+{
+    int data;
+    struct node *next;
+} node;
+
+typedef struct Node
+{
+    int data;
+    struct node *next, *prev;
+} Node;
+
+typedef struct dll
+{
+    Node *head;
+} dll;
+
+typedef struct stack
+{
+    int s[MAX];
+    int top;
+} STACK;
+
+typedef struct NODE
+{
+    int info;
+    struct node *left, *right;
+    int left_thread
+} NODE;
+
+typedef struct tree
+{
+    NODE *root;
+} TREE;
+
+void initStack(STACK *ps)
+{
+    ps->top = -1;
+}
+
+int isFull(STACK *ps)
+{
+    return ps->top == MAX - 1;
+}
+
+int push(STACK *ps, int ele)
+{
+    if (isFull(ps))
+        return 0;
+    //Next two lines: or ps->s[++ps->top]=ele
+    ps->top++;
+    ps->s[ps->top] = ele;
+    return 1;
+}
+
+int intersect()
+{
+    STACK s1, s2;
+    node *p, *q;
+    while (p != NULL && q != NULL)
     {
-        int v = q[f++];
-        printf();
-        for (int i = 0; i < n; i++)
+        if (p->data == q->data)
         {
-            if (a[v][i] && !visited[i])
-            {
-                q[++r] = i;
-                visited[i] = 1;
-            }
+            printf("intersection is ");
         }
-    }
-}
-
-for (int i = 0; i < n; i++)
-{
-    if (!visited[i])
-}
-
-void bfs(NODE *V[MAX], int n, int visited[MAX], int source)
-{
-    int q[n];
-    int f = 0, r = -1;
-    q[++r] = source;
-    visited[source] = 1;
-
-    while (f <= r)
-    {
-        int v = q[f++];
-        print();
-
-        node *p = V[v];
-        while (p != NULL)
+        else if (p->data > q->data)
         {
-            if (!visited[p->info])
-            {
-                q[++r] = p->info;
-                visited[p->info] = 1;
-            }
+            push(&s2, q->data);
+            q = q->next;
+        }
+        else
+        {
+            push(&s1, p->data);
             p = p->next;
         }
     }
 }
 
-void dfs(int a[MAX][MAX], int n, int visited[MAX], int source)
+void convert_eval(char *infix)
 {
-    int s[n];
-    int top = -1;
-
-    int flag = 0, i;
-    s[++top] = source;
-    visited[source] = 1;
-    printf();
-
-    while (top != -1)
+    STACK operator, operand;
+    while (*infix != '\0')
     {
-        flag = 0;
-        source = s[top];
-        for (int i = 0; i < n; i++)
+        if (isOperand(*infix))
+            push(&operand, *infix);
+        else if (isOperator(*infix))
+            push(&operator, * infix);
+        else if (*infix == ')')
         {
-            if (a[source][i] && !visited[i])
+            int op = pop(&operator);
+            while (op != '(')
             {
-                flag = 1;
-                break;
+                int a = pop(&operand);
+                int b = pop(&operand);
+                int result = evaluate(a, b, op);
+                push(&operand, result);
+                op = pop(&operator);
             }
         }
-        if (flag)
-        {
-            s[++top] = i;
-            visited[i] = 1;
-            printf();
-        }
+        infix++;
+    }
+}
+
+int to_check(node *first, node *second)
+{
+    node *p = first;
+    node *q = second;
+    int c = 0;
+    while (p != NULL && q != NULL)
+    {
+        if (p->data > q->data)
+            q = q->next;
+        else if (p->data < q->data)
+            p = p->next;
         else
-            top--;
+            c++;
     }
+    return c;
 }
 
-while (curr != null and stack is not empt)
+void sum(dll *d)
 {
-    if (curr !null)
-    {
-        push(st, currr)
-            curr left
-    }
-    else
-    {
-        cur = pop
-                  printf
-                      curr -
-              right
-    }
+    Node *temp = (Node *)malloc(sizeof(Node));
+    temp->data = d->head->data + d->head->next->data;
+    temp->next=d->head->next->next;
+    temp->prev=NULL;
+
+    
 }
-
-push(root) while (stack not empty)
+int main()
 {
-    curr = pop
-        printf if (currr ruhgt not null)
-            push i if (currr left not null)
-                push it
-}
 
-push(root) while (stack not nempty)
-{
-    curr = pop(s1)
-        push(s2, curr)
-
-            if (left not null)
-                push s1 if (right not null)
-                    push s1
-}
-
-s2 pop print
-
-    i++ if (ht[index].rno == rno && ht[index].mark == 1)
-{
-    copy off
-        retruern 1
+    return 0;
 }
