@@ -40,7 +40,7 @@ void bfs(int a[MAX][MAX],int n,int visited[MAX],int source)
 	visited[source]=1;		//mark source visited
 	
 	int v;
-	while(f<=r) //until q is not empty
+	while(f<=r && f!=-1) //until q is not empty
 	{
 		v=q[f++];  //dequeue
 		printf("%d ",v);
